@@ -1,0 +1,40 @@
+# - data/raw/ is NOT ignored: raw CSV is tracked so it can be used on GitHub Pages.
+# - data/processed/* is ignored; the folder is kept via data/processed/.gitkeep.
+
+# Project
+Useful Notes/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# R
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+
+# Processed outputs (folder kept via .gitkeep)
+data/processed/*
+!data/processed/.gitkeep
+
+# Tableau
+*.twbx
+*.tde
+*.hyper
+
+# Optional: uncomment if you want to ignore large DB files
+# *.db
+# *.sqlite
+
+# Environment / secrets
+.env
+.env.local
+*.pem
