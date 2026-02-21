@@ -1,5 +1,4 @@
 # - data/raw/ is NOT ignored: raw CSV is tracked so it can be used on GitHub Pages.
-# - data/processed/* is ignored; the folder is kept via data/processed/.gitkeep.
 # - data/churn.db is not in Git; generated when running the SQL load script.
 
 # Project
@@ -21,10 +20,6 @@ Thumbs.db
 .RData
 .Rproj.user
 *.Rproj
-
-# Processed outputs (folder kept via .gitkeep)
-data/processed/*
-!data/processed/.gitkeep
 
 # Tableau
 *.twbx
