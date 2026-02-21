@@ -1,6 +1,6 @@
--- 03_kpi_views.sql
+-- 02_kpi_views.sql
 -- KPI views for churn rate, revenue at risk, and segment-level metrics.
--- Run after 02_clean_staging.sql. Consumed by R and/or Tableau.
+-- Run after queries/01_clean_staging.sql. Consumed by R and/or Tableau.
 
 -- Example: overall churn KPI
 /*

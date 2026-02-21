@@ -1,9 +1,9 @@
--- 01_create_tables.sql
+-- create_tables.sql
 -- Create schema and staging tables for Telco Customer Churn data.
 -- Run this first when setting up the analytics database.
 
 -- Example: staging table for raw churn data
--- Adjust column types to match your Telco CSV (e.g. from IBM/Kaggle).
+-- Adjust column types to match your Telco CSV (e.g. from Kaggle).
 /*
 CREATE TABLE IF NOT EXISTS staging_churn (
     customer_id     TEXT,

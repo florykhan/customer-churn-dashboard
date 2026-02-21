@@ -1,6 +1,6 @@
--- 02_clean_staging.sql
+-- 01_clean_staging.sql
 -- Clean and normalize staging data: handle nulls, types, and derived flags.
--- Run after 01_create_tables.sql and after loading raw data into staging.
+-- Run after schema/create_tables.sql and after loading raw data into staging.
 
 -- Example: cleaned base table with consistent types and churn flag
 /*

@@ -52,7 +52,7 @@ The Tableau workbook connects to the CSVs in `data/processed/` and presents:
 ## 6. Reproducibility
 
 1. Place raw Telco CSV in `data/raw/`.
-2. Run SQL scripts in order: `01_create_tables.sql` → `02_clean_staging.sql` → `03_kpi_views.sql`.
+2. Run SQL scripts in order: `sql/schema/create_tables.sql` → `sql/queries/01_clean_staging.sql` → `sql/queries/02_kpi_views.sql`.
 3. In R, install dependencies via `source("r/requirements.R")`, then run `01_extract_from_sql.R` → `02_kpi_tables.R` → `03_churn_drivers.R`.
 4. Point Tableau to `data/processed/` and refresh the dashboard.
 
