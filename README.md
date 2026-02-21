@@ -53,7 +53,6 @@ customer-churn-dashboard/
 │       └── requirements.R                 # R package dependencies (DBI, RSQLite, dplyr, etc.)
 │
 ├── tableau/                               # Tableau workbook (dashboard.twbx or .twb); data source: data/processed/
-├── notebooks/                             # Jupyter / R Markdown notebooks for exploration and analysis
 │
 ├── .gitignore
 ├── LICENSE
