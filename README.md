@@ -113,7 +113,7 @@ The **Telco Customer Churn** dataset is in `data/raw/telco-churn.csv`. If you ne
 
 ### 3️⃣ Run the SQL pipeline
 
-Run the following from the **`project root`** folder (so `churn.db` is created there and `raw/telco-churn.csv` is found). If you use **SQLite** (e.g. `sqlite3` in terminal):
+Run the following from the **`project root`** (so `churn.db` is created there and `raw/telco-churn.csv` is found). If you use **SQLite** (e.g. `sqlite3` in terminal):
 
 ```bash
 cd data
