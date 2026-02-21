@@ -6,11 +6,12 @@ This repository implements an **end-to-end analytics pipeline and executive dash
 
 ## 🎯 Project Overview
 
-The goal of this project is to:
+The goal is to:
 - Build a **reproducible analytics pipeline** from raw Telco churn data to dashboard-ready outputs.
 - **Identify churn patterns** and high-risk customer segments (e.g. by contract type, tenure, services).
 - Quantify **revenue at risk** (MRR from churned or at-risk customers) to support retention decisions.
 - Deliver an **executive-facing Tableau dashboard** with clear KPIs and actionable insights.
+- **Document the workflow** so that raw data → database → queries → exports → dashboard is reproducible and easy to follow.
 
 The pipeline cleanly separates **ingest (SQL)**, **transform (R)**, and **visualize (Tableau)** for maintainability and reuse.
 
@@ -23,6 +24,25 @@ The pipeline cleanly separates **ingest (SQL)**, **transform (R)**, and **visual
 - **Tableau dashboard**: Connect to processed CSVs for churn rate, segment breakdowns, and revenue-at-risk visualizations.
 - **Structured repository**: Clear separation of raw data, processed outputs, code, and documentation.
 - **R dependency file** (`r/utils/requirements.R`) for easy setup of DBI, dplyr, and related packages.
+
+---
+
+## 📊 Tableau Dashboard
+
+The main deliverable for visual storytelling is an interactive dashboard published on Tableau Public:
+
+**[Customer Churn Dashboard — Telco](https://public.tableau.com/app/profile/ilian.khankhalaev/viz/CustomerChurnDashboardTelco/Dashboard1?publish=yes)**
+
+![Customer Churn Dashboard](tableau/Tableau%20Screenshot.png)
+_(the [`tableau/`](tableau/) folder contains the Tableau workbook and screenshot so you can explore it locally)_
+
+The dashboard explores churn rate, high-risk segments, and revenue at risk for a subscription-based telco. It includes:
+
+- **KPI summary** — Total customers, churned vs retained, churn rate %, total MRR, MRR at risk, and % revenue at risk.
+- **Churn by segment** — Bar charts of churn rate by contract type, tenure bucket, internet service, and payment method.
+- **Contract × Tenure** — Heatmap (or matrix) of churn rate and MRR at risk by contract and tenure band (e.g. month-to-month + low tenure = highest risk).
+- **Contract × Internet** — Heatmap of churn and revenue at risk by contract and internet service type (e.g. fiber + month-to-month).
+- **Revenue focus** — MRR vs MRR at risk by contract and by segment to prioritize retention efforts.
 
 ---
 
@@ -52,7 +72,9 @@ customer-churn-dashboard/
 │   └── utils/                             # Utilities and setup
 │       └── requirements.R                 # R package dependencies (DBI, RSQLite, dplyr, etc.)
 │
-├── tableau/                               # Tableau workbook (dashboard.twbx or .twb); data source: data/processed/
+├── tableau/                               # Dashboard assets (screenshot + workbook)
+│   ├── Tableau Screenshot.png
+│   └── *.twbx                             # Tableau workbook; data source: data/processed/
 │
 ├── .gitignore
 ├── LICENSE
@@ -67,6 +89,8 @@ customer-churn-dashboard/
 ---
 
 ## 🧰 Run Locally
+
+You can reproduce the pipeline using **R** (DBI, RSQLite, dplyr, readr) and a SQL engine (e.g. SQLite).
 
 ### 1️⃣ Clone the repository
 
@@ -113,48 +137,42 @@ source("r/scripts/03_churn_drivers.R")
 
 (Optional: run `source("r/scripts/01_extract_from_sql.R")` if you want `staging_churn` and `base_churn` loaded into your R session.)
 
-### 5️⃣ Build the Tableau dashboard
+### 5️⃣ Build or refresh the Tableau dashboard
 
 - Connect Tableau to the CSVs in `data/processed/`.
-- Create views for churn rate, segments, and revenue at risk.
-- Save the workbook as `tableau/dashboard.twbx` (or add a `.twb`).
+- Create views for churn rate, segments, and revenue at risk (or open the workbook in `tableau/`).
+- Save the workbook as `tableau/dashboard.twbx` (or your preferred name).
 
 ---
 
-## 📊 Results (Summary)
+## 📈 Results (Summary)
 
-| **Deliverable** | **Description** |
-|-----------------|------------------|
-| Churn rate & trend | Overall and time/segment-level churn metrics |
-| High-risk segments | e.g. Month-to-month, low tenure, specific service combinations |
-| Revenue at risk | MRR from churned (and optionally at-risk) customers |
-| Executive dashboard | Tableau workbook for stakeholders |
+| Deliverable | Description |
+|-------------|-------------|
+| **Churn rate & trend** | Overall and segment-level churn metrics (contract, tenure, internet, payment). |
+| **High-risk segments** | e.g. Month-to-month, low tenure, fiber + month-to-month. |
+| **Revenue at risk** | MRR from churned customers; % revenue at risk. |
+| **Executive dashboard** | Tableau workbook for stakeholders (link and screenshot above). |
 
-➡️ For pipeline details, metrics definitions, and reproducibility steps, see the full report: [`report.md`](report.md).
-
----
-
-## 📄 Full Technical Report
-
-For the complete methodology, pipeline overview, and reproducibility instructions, see: [`report.md`](report.md). That document is intended for reviewers and anyone who wants to understand the full SQL → R → Tableau workflow and metrics.
+➡️ For pipeline details, metrics definitions, and reproducibility steps, see the full report: [**report.md**](report.md).
 
 ---
 
-## 🚀 Future Directions
+## 🔍 Key Questions Answered
 
-- **Predictive churn model:** Add an R or Python step to train a churn propensity model and export scores for Tableau.
-- **Automation:** Schedule SQL and R runs (e.g. cron, GitHub Actions) and refresh Tableau extracts.
-- **Additional segments:** Drill into tenure bands, product bundles, and demographic splits.
-- **Alerts:** Integrate thresholds (e.g. segment churn rate > X%) with notifications or a simple API.
+- **What is the overall churn rate and how much revenue is at risk?** — KPI summary and `kpi_overall.csv`.
+- **Which segments churn most?** — Breakdowns by contract, tenure bucket, internet service, and payment method.
+- **Where is the combination of contract + tenure or contract + internet riskiest?** — Heatmaps from `churn_drivers_contract_tenure.csv` and `churn_drivers_contract_internet.csv`.
+- **Where should we focus retention efforts first?** — MRR at risk by segment and contract × tenure / contract × internet views.
 
 ---
 
 ## 🧠 Tech Stack
 
-- **Data:** Telco Customer Churn ([Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn))  
-- **SQL:** Schema, staging, cleaning, KPI views (SQLite / Postgres compatible)  
-- **R:** DBI, RSQLite, dplyr, tidyr, readr — extract, transform, export to CSV  
-- **Tableau:** Dashboard on processed CSVs  
+- **Data:** Telco Customer Churn ([Kaggle](https://www.kaggle.com/datasets/blastchar/telco-customer-churn))
+- **SQL:** Schema, staging, cleaning, KPI views (SQLite / Postgres compatible)
+- **R:** DBI, RSQLite, dplyr, tidyr, readr — extract, transform, export to CSV
+- **Visualization:** Tableau Public (dashboard on processed CSVs)
 - **Version control:** Git + GitHub (raw data tracked for GH Pages)
 
 ---
