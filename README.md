@@ -100,17 +100,20 @@ Execute in order in your SQL engine (e.g. SQLite, Postgres):
 
 (Adjust table names and paths in the scripts to match your environment and CSV layout.)
 
-### 4️⃣ Install R dependencies and run the R pipeline
+### 4️⃣ Install R and run the R pipeline
 
-In R:
+**Install R first** (from [CRAN](https://cran.r-project.org/) or your package manager).
+
+In R or RStudio, set the working directory to the project root (e.g. **Session → Set Working Directory → Choose Directory** → select `customer-churn-dashboard`), then run:
 
 ```r
-source("r/utils/requirements.R")   # Install DBI, RSQLite, dplyr, etc.
-# Then run in order:
-# r/scripts/01_extract_from_sql.R  → connect to DB, load tables
-# r/scripts/02_kpi_tables.R        → build KPI tables, write to data/processed/
-# r/scripts/03_churn_drivers.R     → churn drivers, write to data/processed/
+setwd("/path/to/customer-churn-dashboard")   # or use Choose Directory in RStudio
+source("r/utils/requirements.R")
+source("r/scripts/02_kpi_tables.R")
+source("r/scripts/03_churn_drivers.R")
 ```
+
+(Optional: run `source("r/scripts/01_extract_from_sql.R")` if you want `staging_churn` and `base_churn` loaded into your R session.)
 
 ### 5️⃣ Build the Tableau dashboard
 
