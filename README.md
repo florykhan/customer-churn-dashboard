@@ -83,14 +83,13 @@ customer-churn-dashboard/
 ```
 
 > 🗒️ **Note:**  
-> - **Raw data** in `data/raw/` **is tracked by Git** so the dataset can be used on GitHub Pages; it is *not* in `.gitignore`.  
 > - **data/churn.db** is the SQLite database created when you run the SQL load script; it is not in Git.
 
 ---
 
 ## 🧰 Run Locally
 
-You can reproduce the pipeline using **R** (DBI, RSQLite, dplyr, readr) and a SQL engine (e.g. SQLite).
+You can reproduce the pipeline using **R** (DBI, RSQLite, dplyr, readr) and a SQL engine (SQLite).
 
 ### 1️⃣ Clone the repository
 
@@ -114,13 +113,18 @@ The **Telco Customer Churn** dataset is in `data/raw/telco-churn.csv`. If you ne
 
 ### 3️⃣ Run the SQL pipeline
 
-Execute in order in your SQL engine (e.g. SQLite, Postgres):
+Run the following from the **`data/`** folder (so `churn.db` is created there and `raw/telco-churn.csv` is found). If you use **SQLite** (e.g. `sqlite3` in terminal):
 
-1. `sql/schema/create_tables.sql` — create schema and staging table(s)  
-2. `sql/queries/01_clean_staging.sql` — clean and create base table(s)  
-3. `sql/queries/02_kpi_views.sql` — create KPI views  
+```bash
+cd data
+sqlite3 churn.db < ../sql/schema/create_tables.sql
+sqlite3 -csv -header churn.db ".import 'raw/telco-churn.csv' staging_churn"
+sqlite3 churn.db < ../sql/queries/01_clean_staging.sql
+sqlite3 churn.db < ../sql/queries/02_kpi_views.sql
+cd ..
+```
 
-(Adjust table names and paths in the scripts to match your environment and CSV layout.)
+This creates `data/churn.db` with `staging_churn`, `base_churn`, and the KPI views. If you use Postgres or another engine, adjust the commands and paths to match your environment.
 
 ### 4️⃣ Install R and run the R pipeline
 
