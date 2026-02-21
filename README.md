@@ -34,7 +34,7 @@ The main deliverable for visual storytelling is an interactive dashboard publish
 **[Customer Churn Dashboard — Telco](https://public.tableau.com/app/profile/ilian.khankhalaev/viz/CustomerChurnDashboardTelco/Dashboard1?publish=yes)**
 
 ![Customer Churn Dashboard](tableau/Tableau%20Screenshot.png)
-_(the [`tableau/`](tableau/) folder contains the Tableau workbook and screenshot so you can explore it locally)_
+_(the [`tableau/`](tableau/) folder contains the Tableau workbook `.twbx` so you can explore it locally)_
 
 The dashboard explores churn rate, high-risk segments, and revenue at risk for a subscription-based telco. It includes:
 
