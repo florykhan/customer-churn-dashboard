@@ -1,0 +1,6 @@
+payment_method,n,churned,churn_rate_pct,mrr,mrr_at_risk
+Electronic check,2365,1071,45.29,180345,84288.75
+Mailed check,1612,308,19.11,70794.3,16803.6
+Bank transfer (automatic),1544,258,16.71,103745.45,20091.9
+Credit card (automatic),1522,232,15.24,101231.85,17946.6
+PaymentMethod,1,0,0,0,0
