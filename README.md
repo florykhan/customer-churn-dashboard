@@ -22,7 +22,7 @@ The pipeline cleanly separates **ingest (SQL)**, **transform (R)**, and **visual
 - **R layer** (`r/`): Extract data from the database, build KPI and driver tables, and export CSVs for Tableau.
 - **Tableau dashboard**: Connect to processed CSVs for churn rate, segment breakdowns, and revenue-at-risk visualizations.
 - **Structured repository**: Clear separation of raw data, processed outputs, code, and documentation.
-- **R dependency file** (`r/requirements.R`) for easy setup of DBI, dplyr, and related packages.
+- **R dependency file** (`r/utils/requirements.R`) for easy setup of DBI, dplyr, and related packages.
 
 ---
 
@@ -44,10 +44,12 @@ customer-churn-dashboard/
 │       └── 02_kpi_views.sql               # KPI views (churn rate, revenue at risk, segment breakdowns)
 │
 ├── r/                                     # Extract from SQL, build KPI tables, churn driver analysis
-│   ├── 01_extract_from_sql.R              # Connect to DB and load staging / base tables into R
-│   ├── 02_kpi_tables.R                    # Build KPI aggregates and export to data/processed/
-│   ├── 03_churn_drivers.R                 # Churn driver analysis and segment exports for Tableau
-│   └── requirements.R                     # R package dependencies (DBI, RSQLite, dplyr, etc.)
+│   ├── scripts/                           # Pipeline scripts (run in order)
+│   │   ├── 01_extract_from_sql.R          # Connect to DB and load staging / base tables into R
+│   │   ├── 02_kpi_tables.R                # Build KPI aggregates and export to data/processed/
+│   │   └── 03_churn_drivers.R             # Churn driver analysis and segment exports for Tableau
+│   └── utils/                             # Utilities and setup
+│       └── requirements.R                 # R package dependencies (DBI, RSQLite, dplyr, etc.)
 │
 ├── tableau/                               # Tableau workbook (dashboard.twbx or .twb); data source: data/processed/
 ├── notebooks/                             # Jupyter / R Markdown notebooks for exploration and analysis
@@ -101,11 +103,11 @@ Execute in order in your SQL engine (e.g. SQLite, Postgres):
 In R:
 
 ```r
-source("r/requirements.R")   # Install DBI, RSQLite, dplyr, etc.
+source("r/utils/requirements.R")   # Install DBI, RSQLite, dplyr, etc.
 # Then run in order:
-# 01_extract_from_sql.R  → connect to DB, load tables
-# 02_kpi_tables.R        → build KPI tables, write to data/processed/
-# 03_churn_drivers.R     → churn drivers, write to data/processed/
+# r/scripts/01_extract_from_sql.R  → connect to DB, load tables
+# r/scripts/02_kpi_tables.R        → build KPI tables, write to data/processed/
+# r/scripts/03_churn_drivers.R     → churn drivers, write to data/processed/
 ```
 
 ### 5️⃣ Build the Tableau dashboard
