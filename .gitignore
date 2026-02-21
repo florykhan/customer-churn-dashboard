@@ -22,7 +22,6 @@ Thumbs.db
 *.Rproj
 
 # Tableau
-*.twbx
 *.tde
 *.hyper
 tableau/PLOTS_AND_DATA.md
